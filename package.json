@@ -1,0 +1,21 @@
+{
+  "name": "html-extract-js",
+  "version": "0.1.0",
+  "description": "Extract HTML documents for collecting metadata and core context.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Additor/html-extract-js.git"
+  },
+  "main": "index.js",
+  "scripts": {},
+  "keywords": [
+    "html",
+    "extraction",
+    "javascript"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "cheerio": "^0.22.0",
+    "lodash": "^4.16.6"
+  }
+}

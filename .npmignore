@@ -1,0 +1,21 @@
+# WebStorm 설정 파일
+.idea/
+
+# Log 파일
+logs/
+*.log
+
+# 설정 파일
+.npmignore
+
+# Modules
+node_modules/
+webpack/
+
+# Build
+docs/
+
+# Test
+test/
+
+# Legacy
