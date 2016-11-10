@@ -16,7 +16,7 @@ $ npm install --save html-extract-js
 
 
 ### Load
-First you need to pass a HTML document data as a type of "String" of "Buffer".
+First you need to pass a HTML document data as a type of "String" or "Buffer".
 Once you get ready to extract the document, load a html-extractor.
   
 ```js
@@ -41,7 +41,7 @@ const extractor = HtmlExtractor.load(html, option);
 
 #### URI
 ```js
-const uri = extractor.getURI();         // "https://additor.io"
+const uri = extractor.getURI();                 // "https://additor.io"
 ```
 
 #### Title
