@@ -9,15 +9,15 @@ const Extractor = require('../../lib/html-extract').default;
 
 // Local Fields...
 
-describe('Browser 테스트', () => {
+describe('In Webpage Test', () => {
   before(() => {
 
   });
 
-  describe('페이지 정보를 긁어온다.', () => {
+  describe('URL Request Test', () => {
     it('', (done) => {
       const opt = {
-        url: 'http://news.naver.com/main/read.nhn?mode=LPOD&mid=sec&oid=001&aid=0008809803&isYeonhapFlash=Y',
+        url: 'https://additor.io',
         encoding: null,
       };
 
@@ -34,10 +34,12 @@ describe('Browser 테스트', () => {
         };
 
         const extractor = Extractor.load(html, option);
+        const title = extractor.getTitle();
         const desc = extractor.getDescription();
         const thumbnail = extractor.getThumbnail();
+        const uri = extractor.getURI();
+        const favicon = extractor.getFavicon();
 
-        console.log(extractor);
         done();
       });
     }).timeout(0);

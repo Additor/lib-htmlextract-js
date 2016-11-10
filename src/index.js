@@ -4,10 +4,12 @@ import Cheerio from 'cheerio';
 import IconvLite from 'iconv-lite';
 
 // Own Modules...
-import ContextExtractor from './contextExtractor';
-import MetaExtractor from './metaExtractor';
+import ContextExtractor from './ContextExtractor';
+import MetaExtractor from './MetaExtractor';
+import Utils from './Utils';
 
 // Local Fields...
+
 
 /**
  *
@@ -24,7 +26,9 @@ class HtmlExtractor {
 
       const body = charset ? IconvLite.decode(html, charset) : html;
       this.$ = Cheerio.load(body);
+
     } catch (e) {
+      console.error();
       throw e;
     }
 
@@ -36,9 +40,24 @@ class HtmlExtractor {
     };
   }
 
+  /**
+   *
+   * @returns {Object}
+   */
   brief() {
-    if (_.isEmpty(archive)) {
+    const clone = _.cloneDeep(this.archive);
+    _.keys(this.archive).forEach(prop => {
+      const value = this.archive[prop];
+      if (_.isArray(value)) {
+        this.archive[prop] = value[0];
+      }
+    });
+    return clone;
+  }
 
+  getArchive() {
+    if (!_.isPlainObject(this.archive)) {
+      this.archive = { };
     }
     return this.archive;
   }
@@ -50,10 +69,10 @@ class HtmlExtractor {
    * @returns {string}
    */
   getTitle(criteria) {
-    const condition = {
+    const condition = Utils.reviseCondition(criteria);
 
-    };
-    return (this.archive.title || (this.archive.title = this.metaExtractor.title(condition)));
+    const archive = this.getArchive();
+    return (archive.title = this.metaExtractor.title(condition));
   }
 
   /**
@@ -63,10 +82,10 @@ class HtmlExtractor {
    * @returns {string}
    */
   getURI(criteria) {
-    const condition = {
+    const condition = Utils.reviseCondition(criteria);
 
-    };
-    return (this.archive.uri || (this.archive.uri = this.metaExtractor.uri(condition)));
+    const archive = this.getArchive();
+    return (archive.uri = this.metaExtractor.uri(condition));
   }
 
   /**
@@ -76,10 +95,10 @@ class HtmlExtractor {
    * @returns {string}
    */
   getThumbnail(criteria) {
-    const condition = {
+    const condition = Utils.reviseCondition(criteria);
 
-    };
-    return (this.archive.thumbnail || (this.archive.thumbnail = this.metaExtractor.thumbnail(condition)));
+    const archive = this.getArchive();
+    return (archive.thumbnail = this.metaExtractor.thumbnail(condition));
   }
 
   /**
@@ -89,11 +108,25 @@ class HtmlExtractor {
    * @returns {string}
    */
   getDescription(criteria) {
-    const condition = {
+    const condition = Utils.reviseCondition(criteria);
 
-    };
-    return (this.archive.description || (this.archive.description = this.metaExtractor.description(condition)));
+    const archive = this.getArchive();
+    return (archive.description = this.metaExtractor.description(condition));
   }
+
+  /**
+   *
+   * @param criteria {Object}
+   *
+   * @returns {string}
+   */
+  getFavicon(criteria) {
+    const condition = Utils.reviseCondition(criteria);
+
+    const archive = this.getArchive();
+    return (archive.favicon = this.metaExtractor.favicon(condition));
+  }
+
 
   /**
    *
@@ -102,11 +135,12 @@ class HtmlExtractor {
    * @returns {Array<string>}
    */
   getImages(criteria) {
-    const condition = {
+    const condition = Utils.reviseCondition(criteria);
 
-    };
-    return (this.archive.images || (this.archive.images = this.metaExtractor.images(condition)));
+    const archive = this.getArchive();
+    return (archive.images = this.metaExtractor.images(condition));
   }
+
 
   /**
    *

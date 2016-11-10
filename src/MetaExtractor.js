@@ -24,6 +24,8 @@ class MetaExtractor {
   /**
    *
    * @param $
+   *
+   * @returns {MetaExtractor}
    */
   init($) {
     this.$ = $;
@@ -55,9 +57,19 @@ class MetaExtractor {
     return this;
   }
 
+  /**
+   * Extract audio data.
+   *
+   * @param condition {Object}
+   * @param condition.size {number} Number of results (Default: 1)
+   * @param condition.offset {number} Number of result offset (Default: 0)
+   *
+   * @returns {Array<string>|string|undefined}
+   */
   audio(condition) {
     const audioPriorities = [
       { tag: 'meta', attr: 'og:audio' },
+      { tag: 'audio' },
     ];
     // TODO: Selecting Algorithm
 
@@ -66,14 +78,23 @@ class MetaExtractor {
       map[priority.attr] = priority;
     });
 
-    const candidates = _.compact(this.metaList.map((meta) => {
+    const candidates = _.uniq(_.compact(this.metaList.map((meta) => {
       const prop = meta.property || meta.name;
       return (prop && map[prop])? meta.content : null;
-    }));
+    })));
 
-    return _.uniq(candidates);
+    return condition.size > 1 ? candidates.slice(condition.offset, condition.size) : candidates[0];
   }
 
+  /**
+   * Extract author/creator data.
+   *
+   * @param condition {Object}
+   * @param condition.size {number} Number of results (Default: 1)
+   * @param condition.offset {number} Number of result offset (Default: 0)
+   *
+   * @returns {Array<string>|string|undefined}
+   */
   author(condition) {
     const authorPriorities = [
       { tag: 'meta', attr: 'og:article:author' },
@@ -88,14 +109,23 @@ class MetaExtractor {
       map[priority.attr] = priority;
     });
 
-    const candidates = _.compact(this.metaList.map((meta) => {
+    const candidates = _.uniq(_.compact(this.metaList.map((meta) => {
       const prop = meta.property || meta.name;
       return (prop && map[prop])? meta.content : null;
-    }));
+    })));
 
-    return _.uniq(candidates);
+    return condition.size > 1 ? candidates.slice(condition.offset, condition.size) : candidates[0];
   }
 
+  /**
+   * Extract category data.
+   *
+   * @param condition {Object}
+   * @param condition.size {number} Number of results (Default: 1)
+   * @param condition.offset {number} Number of result offset (Default: 0)
+   *
+   * @returns {Array<string>|string|undefined}
+   */
   categories(condition) {
     const categoryPriorities = [
       { tag: 'meta', attr: 'og:type' },
@@ -112,14 +142,23 @@ class MetaExtractor {
       map[priority.attr] = priority;
     });
 
-    const candidates = _.compact(this.metaList.map((meta) => {
+    const candidates = _.uniq(_.compact(this.metaList.map((meta) => {
       const prop = meta.property || meta.name;
       return (prop && map[prop])? meta.content : null;
-    }));
+    })));
 
-    return _.uniq(candidates);
+    return condition.size > 1 ? candidates.slice(condition.offset, condition.size) : candidates[0];
   }
 
+  /**
+   * Extract contact data.
+   *
+   * @param condition {Object}
+   * @param condition.size {number} Number of results (Default: 1)
+   * @param condition.offset {number} Number of result offset (Default: 0)
+   *
+   * @returns {Array<string>|string|undefined}
+   */
   contact(condition) {
     const contactPriorities = [
       { tag: 'meta', attr: 'og:phone_number' },
@@ -132,14 +171,23 @@ class MetaExtractor {
       map[priority.attr] = priority;
     });
 
-    const candidates = _.compact(this.metaList.map((meta) => {
+    const candidates = _.uniq(_.compact(this.metaList.map((meta) => {
       const prop = meta.property || meta.name;
       return (prop && map[prop])? meta.content : null;
-    }));
+    })));
 
-    return _.uniq(candidates);
+    return condition.size > 1 ? candidates.slice(condition.offset, condition.size) : candidates[0];
   }
 
+  /**
+   * Extract description data.
+   *
+   * @param condition {Object}
+   * @param condition.size {number} Number of results (Default: 1)
+   * @param condition.offset {number} Number of result offset (Default: 0)
+   *
+   * @returns {Array<string>|string|undefined}
+   */
   description(condition) {
     const descPriorities = [
       { tag: 'meta', attr: 'og:description' },
@@ -155,14 +203,23 @@ class MetaExtractor {
       map[priority.attr] = priority;
     });
 
-    const candidates = _.compact(this.metaList.map((meta) => {
+    const candidates = _.uniq(_.compact(this.metaList.map((meta) => {
       const prop = meta.property || meta.name;
       return (prop && map[prop])? meta.content : null;
-    }));
+    })));
 
-    return _.uniq(candidates);
+    return condition.size > 1 ? candidates.slice(condition.offset, condition.size) : candidates[0];
   }
 
+  /**
+   * Extract email data.
+   *
+   * @param condition {Object}
+   * @param condition.size {number} Number of results (Default: 1)
+   * @param condition.offset {number} Number of result offset (Default: 0)
+   *
+   * @returns {Array<string>|string|undefined}
+   */
   email(condition) {
     const emailPriorities = [
       { tag: 'meta', attr: 'og:email' },
@@ -175,14 +232,23 @@ class MetaExtractor {
       map[priority.attr] = priority;
     });
 
-    const candidates = _.compact(this.metaList.map((meta) => {
+    const candidates = _.uniq(_.compact(this.metaList.map((meta) => {
       const prop = meta.property || meta.name;
       return (prop && map[prop])? meta.content : null;
-    }));
+    })));
 
-    return _.uniq(candidates);
+    return condition.size > 1 ? candidates.slice(condition.offset, condition.size) : candidates[0];
   }
 
+  /**
+   * Extract favicon data.
+   *
+   * @param condition {Object}
+   * @param condition.size {number} Number of results (Default: 1)
+   * @param condition.offset {number} Number of result offset (Default: 0)
+   *
+   * @returns {Array<string>|string|undefined}
+   */
   favicon(condition) {
     const faviconPriorities = [
       { tag: 'link', attr: 'icon', attrName: 'rel', valueName: 'href' },
@@ -198,17 +264,26 @@ class MetaExtractor {
       map[priority.attr] = priority;
     });
 
-    const candidates = _.compact(this.metaList.map((meta) => {
-      const prop = meta.property || meta.name;
-      return (prop && map[prop])? meta.content : null;
-    }));
+    const candidates = _.uniq(_.compact(this.linkList.map((link) => {
+      const prop = link.rel || link.name;
+      return (prop && map[prop])? link.href : null;
+    })));
 
-    return _.uniq(candidates);
+    return condition.size > 1 ? candidates.slice(condition.offset, condition.size) : candidates[0];
   }
 
+  /**
+   * Extract Image data.
+   *
+   * @param condition {Object}
+   * @param condition.size {number} Number of results (Default: 1)
+   * @param condition.offset {number} Number of result offset (Default: 0)
+   *
+   * @returns {Array<string>|string|undefined}
+   */
   images(condition) {
     const imagePriorities = [
-
+      { tag: 'img' },
     ];
 
     // TODO: Selecting
@@ -217,14 +292,23 @@ class MetaExtractor {
       map[priority.attr] = priority;
     });
 
-    const candidates = _.compact(this.metaList.map((meta) => {
+    const candidates = _.uniq(_.compact(this.metaList.map((meta) => {
       const prop = meta.property || meta.name;
       return (prop && map[prop])? meta.content : null;
-    }));
+    })));
 
-    return _.uniq(candidates);
+    return condition.size > 1 ? candidates.slice(condition.offset, condition.size) : candidates[0];
   }
 
+  /**
+   * Extract keyword data.
+   *
+   * @param condition {Object}
+   * @param condition.size {number} Number of results (Default: 1)
+   * @param condition.offset {number} Number of result offset (Default: 0)
+   *
+   * @returns {Array<string>|string|undefined}
+   */
   keywords(condition) {
     const keywordPriorities = [
       { tag: 'meta', attr: 'keywords' },
@@ -236,14 +320,24 @@ class MetaExtractor {
       map[priority.attr] = priority;
     });
 
-    const candidates = _.compact(this.metaList.map((meta) => {
+    const keywordBundles = _.compact(this.metaList.map((meta) => {
       const prop = meta.property || meta.name;
-      return (prop && map[prop])? meta.content : null;
+      return (prop && map[prop])? (meta.content && meta.content.split(/\s*(,|\.|;|:)?\s*/)) : null;
     }));
+    const candidates = _.uniq(_.flattenDeep(keywordBundles));
 
-    return _.uniq(candidates);
+    return condition.size > 1 ? candidates.slice(condition.offset, condition.size) : candidates[0];
   }
 
+  /**
+   * Extract language data.
+   *
+   * @param condition {Object}
+   * @param condition.size {number} Number of results (Default: 1)
+   * @param condition.offset {number} Number of result offset (Default: 0)
+   *
+   * @returns {Array<string>|string|undefined}
+   */
   language(condition) {
     const langPriorities = [
       { tag: 'meta', attr: 'og:locale' },
@@ -257,14 +351,23 @@ class MetaExtractor {
       map[priority.attr] = priority;
     });
 
-    const candidates = _.compact(this.metaList.map((meta) => {
+    const candidates = _.uniq(_.compact(this.metaList.map((meta) => {
       const prop = meta.property || meta.name;
       return (prop && map[prop])? meta.content : null;
-    }));
+    })));
 
-    return _.uniq(candidates);
+    return condition.size > 1 ? candidates.slice(condition.offset, condition.size) : candidates[0];
   }
 
+  /**
+   * Extract location data.
+   *
+   * @param condition {Object}
+   * @param condition.size {number} Number of results (Default: 1)
+   * @param condition.offset {number} Number of result offset (Default: 0)
+   *
+   * @returns {Array<string>|string|undefined}
+   */
   location(condition) {
     const locationPriorities = [
       { tag: 'meta', attr: 'og:latitude' },
@@ -282,15 +385,23 @@ class MetaExtractor {
       map[priority.attr] = priority;
     });
 
-    const candidates = _.compact(this.metaList.map((meta) => {
+    const candidates = _.uniq(_.compact(this.metaList.map((meta) => {
       const prop = meta.property || meta.name;
       return (prop && map[prop])? meta.content : null;
-    }));
+    })));
 
-    return _.uniq(candidates);
-
+    return condition.size > 1 ? candidates.slice(condition.offset, condition.size) : candidates[0];
   }
 
+  /**
+   * Extract thumbnail-image data.
+   *
+   * @param condition {Object}
+   * @param condition.size {number} Number of results (Default: 1)
+   * @param condition.offset {number} Number of result offset (Default: 0)
+   *
+   * @returns {Array<string>|string|undefined}
+   */
   thumbnail(condition) {
     const thumbnailPriorities = [
       { tag: 'meta', attr: 'og:image' },
@@ -304,14 +415,23 @@ class MetaExtractor {
       map[priority.attr] = priority;
     });
 
-    const candidates = _.compact(this.metaList.map((meta) => {
+    const candidates = _.uniq(_.compact(this.metaList.map((meta) => {
       const prop = meta.property || meta.name;
       return (prop && map[prop])? meta.content : null;
-    }));
+    })));
 
-    return _.uniq(candidates);
+    return condition.size > 1 ? candidates.slice(condition.offset, condition.size) : candidates[0];
   }
 
+  /**
+   * Extract title data.
+   *
+   * @param condition {Object}
+   * @param condition.size {number} Number of results (Default: 1)
+   * @param condition.offset {number} Number of result offset (Default: 0)
+   *
+   * @returns {Array<string>|string|undefined}
+   */
   title(condition) {
     const titlePriorities = [
       { tag: 'meta', attr: 'og:title' },
@@ -327,14 +447,23 @@ class MetaExtractor {
       map[priority.attr] = priority;
     });
 
-    const candidates = _.compact(this.metaList.map((meta) => {
+    const candidates = _.uniq(_.compact(this.metaList.map((meta) => {
       const prop = meta.property || meta.name;
       return (prop && map[prop])? meta.content : null;
-    }));
+    })));
 
-    return _.uniq(candidates);
+    return condition.size > 1 ? candidates.slice(condition.offset, condition.size) : candidates[0];
   }
 
+  /**
+   * Extract fileType data.
+   *
+   * @param condition {Object}
+   * @param condition.size {number} Number of results (Default: 1)
+   * @param condition.offset {number} Number of result offset (Default: 0)
+   *
+   * @returns {Array<string>|string|undefined}
+   */
   type(condition) {
     const typePriorities = [
       { tag: 'meta', attr: 'og:video:type' },
@@ -347,14 +476,23 @@ class MetaExtractor {
       map[priority.attr] = priority;
     });
 
-    const candidates = _.compact(this.metaList.map((meta) => {
+    const candidates = _.uniq(_.compact(this.metaList.map((meta) => {
       const prop = meta.property || meta.name;
       return (prop && map[prop])? meta.content : null;
-    }));
+    })));
 
-    return _.uniq(candidates);
+    return condition.size > 1 ? candidates.slice(condition.offset, condition.size) : candidates[0];
   }
 
+  /**
+   * Extract uri data.
+   *
+   * @param condition {Object}
+   * @param condition.size {number} Number of results (Default: 1)
+   * @param condition.offset {number} Number of result offset (Default: 0)
+   *
+   * @returns {Array<string>|string|undefined}
+   */
   uri(condition) {
     const uriPriorities = [
       { tag: 'meta', attr: 'og:url' },
@@ -369,17 +507,27 @@ class MetaExtractor {
       map[priority.attr] = priority;
     });
 
-    const candidates = _.compact(this.metaList.map((meta) => {
+    const candidates = _.uniq(_.compact(this.metaList.map((meta) => {
       const prop = meta.property || meta.name;
       return (prop && map[prop])? meta.content : null;
-    }));
+    })));
 
-    return _.uniq(candidates);
+    return condition.size > 1 ? candidates.slice(condition.offset, condition.size) : candidates[0];
   }
 
+  /**
+   * Extract video data.
+   *
+   * @param condition {Object}
+   * @param condition.size {number} Number of results (Default: 1)
+   * @param condition.offset {number} Number of result offset (Default: 0)
+   *
+   * @returns {Array<string>|string|undefined}
+   */
   videos(condition) {
     const videoPriorities = [
       { tag: 'meta', attr: 'og:video' },
+      { tag: 'video' },
     ];
 
     // TODO: Selecting Algorithm
@@ -388,14 +536,13 @@ class MetaExtractor {
       map[priority.attr] = priority;
     });
 
-    const candidates = _.compact(this.metaList.map((meta) => {
+    const candidates = _.uniq(_.compact(this.metaList.map((meta) => {
       const prop = meta.property || meta.name;
       return (prop && map[prop])? meta.content : null;
-    }));
+    })));
 
-    return _.uniq(candidates);
+    return condition.size > 1 ? candidates.slice(condition.offset, condition.size) : candidates[0];
   }
-
 }
 
 export default MetaExtractor;
