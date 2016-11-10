@@ -1,6 +1,6 @@
-# html-extract-js (building...)
+# html-extract-js
 
-[html-extract-js]() is a javascript library that extracts HTML documents for collecting metadata and core contextual information in infinite webpages.
+[html-extract-js](#) is a javascript library that extracts HTML documents for collecting metadata and core contextual information in infinite webpages.
 
 This library has been created and used in [Additor](https://additor.io) for web-scraping. 
  
@@ -39,6 +39,11 @@ const option = {
 const extractor = HtmlExtractor.load(html, option);
 ```
 
+#### URI
+```js
+const uri = extractor.getURI();         // "https://additor.io"
+```
+
 #### Title
 ```js
 const title = extractor.getTitle();             // "Additor :: Just Add it. Be an Additor"
@@ -49,15 +54,9 @@ const title = extractor.getTitle();             // "Additor :: Just Add it. Be a
 const description = extractor.getDescription(); // "Additor is alchemy that turns your scattered information into well-organized content..."
 ```
 
-
 #### Thumbnail
 ```js
 const thumbnail = extractor.getThumbnail();     // "https://cdn.additor.io/image/main/landing_temp.png"
-```
-
-#### Images
-```js
-const images = extractor.getImages();           // 
 ```
 
 #### Favicon
