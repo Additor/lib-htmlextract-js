@@ -31,7 +31,7 @@ The HtmlExtractor is a wrapping class of its sub-extractors.
 By default, it uses two extractors, [ContextExtractor]() and [MetaExtractor]().
 
 
-Also, you can configure its extractor through passing `option` parameter.
+Also, you can configure this extractor through passing `option` parameter.
 ```js
 const option = {
     charset: 'EUC-KR',      // if you set, "iconv-lite" converts the HTML document.
@@ -65,5 +65,6 @@ const favicon = extractor.getFavicon();         // "https://cdn.additor.io/image
 ```
 
 
-## License
-MIT License
+## License [#](https://github.com/Additor/html-extract-js/blob/master/LICENSE.md)
+MIT License 
+
