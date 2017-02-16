@@ -1,5 +1,6 @@
 // Common Modules...
 const Path = require('path');
+const Webpack = require('webpack');
 
 // Own Modules...
 
@@ -8,14 +9,13 @@ const Path = require('path');
 // Beginning of Logic!
 module.exports = {
   name: 'html-extract-js',
-  context: Path.join(__dirname, '../src'),
-  entry: ['./index.js'],
+  entry: [Path.join(__dirname, '../src/index.js')],
   output: {
     path: Path.join(__dirname, '../lib'),
     filename: 'html-extract.js',
     libraryTarget: 'commonjs2',
   },
-  devtool: 'source-map',
+  // devtool: 'source-map',
   module: {
     loaders: [
       {
@@ -34,5 +34,7 @@ module.exports = {
     resolve: {
       extensions: ['', '.js'],
     },
+    plugins: [
+    ],
   },
 };

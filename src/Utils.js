@@ -17,5 +17,13 @@ exports.reviseCondition = (criteria) => {
   return {
     size: _.isNumber(mCriteria.size) ? mCriteria.size : mDefaultCondition.size,
     offset: _.isNumber(mCriteria.offset) ? mCriteria.offset : mDefaultCondition.offset,
+    domain: _.isString(mCriteria.domain) ? mCriteria.domain : '',
   };
+};
+
+exports.adjustRelativeURL = (url, domain) => {
+  if (/^\/[^/]/.test(url)) {
+    return domain + url;
+  }
+  return url;
 };

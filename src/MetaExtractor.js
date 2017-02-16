@@ -2,6 +2,7 @@
 import _ from "lodash";
 
 // Own Modules...
+import { adjustRelativeURL } from './Utils';
 
 // Local Fields...
 
@@ -40,6 +41,15 @@ class MetaExtractor {
       }
       return false;
     }).map((meta) => meta.attribs);
+
+    const titleObj = $('title')[0];
+    const titleData = _.get(titleObj, 'children[0].data');
+    if (titleData) {
+      this.metaList.push({
+        property: 'title',
+        content: titleData,
+      });
+    }
 
     // Link Tag Listing...
     this.linkList = _.values($('link')).filter((link) => {
@@ -243,13 +253,14 @@ class MetaExtractor {
   /**
    * Extract favicon data.
    *
-   * @param condition {Object}
-   * @param condition.size {number} Number of results (Default: 1)
-   * @param condition.offset {number} Number of result offset (Default: 0)
+   * @param option {Object}
+   * @param option.domain {string}
+   * @param option.size {number} Number of results (Default: 1)
+   * @param option.offset {number} Number of result offset (Default: 0)
    *
    * @returns {Array<string>|string|undefined}
    */
-  favicon(condition) {
+  favicon(option) {
     const faviconPriorities = [
       { tag: 'link', attr: 'icon', attrName: 'rel', valueName: 'href' },
       { tag: 'link', attr: 'logo', attrName: 'rel', valueName: 'href' },
@@ -266,10 +277,10 @@ class MetaExtractor {
 
     const candidates = _.uniq(_.compact(this.linkList.map((link) => {
       const prop = link.rel || link.name;
-      return (prop && map[prop])? link.href : null;
+      return (prop && map[prop])? adjustRelativeURL(link.href, (option && option.domain)) : null;
     })));
 
-    return condition.size > 1 ? candidates.slice(condition.offset, condition.size) : candidates[0];
+    return option.size > 1 ? candidates.slice(option.offset, option.size) : candidates[0];
   }
 
   /**

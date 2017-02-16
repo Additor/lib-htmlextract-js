@@ -1,7 +1,7 @@
 // Common Modules...
 import _ from 'lodash';
 import Cheerio from 'cheerio';
-import IconvLite from 'iconv-lite';
+import IconvLite from 'iconv-lite'
 
 // Own Modules...
 import ContextExtractor from './ContextExtractor';
@@ -22,7 +22,7 @@ class HtmlExtractor {
    */
   constructor(html, option) {
     try {
-      const charset = _.get(option, 'charset');
+      const charset = _.get(option, 'charset', 'UTF-8').toUpperCase();
 
       const body = charset ? IconvLite.decode(html, charset) : html;
       this.$ = Cheerio.load(body);
@@ -161,3 +161,4 @@ class HtmlExtractor {
 
 
 export default HtmlExtractor;
+export { Utils };
